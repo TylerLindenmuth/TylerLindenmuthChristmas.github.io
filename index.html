@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tyler's Christmas List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a pine-green wall with luggage-style gift tags hung in a grid, grouped by price range; one big retro headline and a countdown. */
+:root {
+  --pine: #0e3b2c;
+  --berry: #c0283a;
+  --gold: #f0b73a;
+  --snow: #f3f6f1;
+  --ink: #17261f;
+  --display: "Caprasimo", "Rockwell", Georgia, serif;
+  --body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--pine);
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,.07) 1px, transparent 0);
+  background-size: 22px 22px;
+  color: var(--snow);
+  font-family: var(--body);
+  line-height: 1.5;
+  min-height: 100%;
+}
+main { max-width: 1040px; margin: 0 auto; padding: 40px 20px 72px; }
+header { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-end; justify-content: space-between; padding-bottom: 28px; border-bottom: 2px dashed rgba(240,183,58,.55); margin-bottom: 36px; }
+.kicker { margin: 0 0 6px; color: var(--gold); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: .8rem; }
+h1 { font-family: var(--display); font-weight: 400; font-size: clamp(2.6rem, 9vw, 5.2rem); line-height: .95; margin: 0; text-wrap: balance; }
+h1 span { color: var(--berry); background: var(--snow); padding: 0 .18em; border-radius: .12em; display: inline-block; transform: rotate(-2deg); }
+.count { text-align: center; background: var(--berry); border-radius: 18px; padding: 14px 22px; box-shadow: 0 6px 0 #8c1a29; }
+.count b { display: block; font-family: var(--display); font-weight: 400; font-size: 3.2rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.count small { font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .72rem; }
+.sechead { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin: 0 0 18px; }
+h2.sec { font-family: var(--display); font-weight: 400; font-size: 2.1rem; margin: 0; color: var(--gold); font-variant-numeric: tabular-nums; }
+.sechead span { color: #cfe0d6; font-size: .9rem; font-weight: 500; }
+.grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); gap: 22px; }
+.tag { position: relative; background: var(--snow); color: var(--ink); border-radius: 6px 22px 22px 22px; padding: 38px 18px 16px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 8px 0 rgba(0,0,0,.22); }
+.tag::before { content: ""; position: absolute; top: 12px; left: 18px; width: 14px; height: 14px; border-radius: 50%; background: var(--pine); box-shadow: inset 0 0 0 3px var(--snow), 0 0 0 2px var(--pine); }
+.kind { position: absolute; top: 10px; right: 14px; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; background: #dfe8e1; color: #3b4f45; }
+.vinyl .kind { background: var(--berry); color: #fff; }
+.tag h3 { font-family: var(--display); font-weight: 400; font-size: 1.4rem; line-height: 1.12; margin: 0; text-wrap: balance; }
+.tag p { margin: 0; color: #3d5247; font-size: .95rem; }
+.tag.vinyl { border-radius: 22px 22px 6px 22px; }
+.tag.vinyl h3 { color: var(--berry); }
+.meta { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-top: auto; padding-top: 10px; border-top: 2px dotted #b9c9bf; font-size: .9rem; }
+.price { font-weight: 700; font-size: 1.15rem; font-variant-numeric: tabular-nums; }
+.meta a { color: var(--berry); font-weight: 700; }
+.welcome { margin: 0 0 28px; max-width: 56ch; font-size: 1.15rem; font-weight: 500; color: var(--snow); text-wrap: pretty; }
+details.range { border-top: 2px dashed rgba(240,183,58,.35); padding: 14px 0; }
+details.range + details.range { margin-top: 0; }
+details.range:last-of-type { border-bottom: 2px dashed rgba(240,183,58,.35); }
+details.range > summary { list-style: none; cursor: pointer; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin: 0; border-radius: 8px; }
+details.range > summary::-webkit-details-marker { display: none; }
+details.range > summary::before { content: ""; width: 12px; height: 12px; align-self: center; border-right: 3px solid var(--gold); border-bottom: 3px solid var(--gold); transform: rotate(-45deg); transition: transform .15s; flex: none; margin-right: 4px; }
+details.range[open] > summary::before { transform: rotate(45deg); }
+details.range[open] > summary { margin-bottom: 18px; }
+.tag.card { border-radius: 22px 6px 22px 22px; }
+.tag.card h3 { color: var(--pine); }
+.tag.card .kind { background: var(--gold); color: var(--ink); }
+details.range > summary { min-height: 48px; -webkit-tap-highlight-color: transparent; }
+@media (max-width: 520px) {
+  main { padding: 28px 16px 56px; }
+  header { gap: 18px; padding-bottom: 22px; margin-bottom: 24px; }
+  .count { padding: 10px 18px; }
+  .count b { font-size: 2.6rem; }
+  h2.sec { font-size: 1.7rem; }
+  .grid { gap: 18px; }
+  .tag { padding: 36px 16px 14px; }
+  .meta { flex-wrap: wrap; row-gap: 4px; }
+  .meta a { padding: 6px 0; }
+}
+footer { margin-top: 44px; color: #9fb8aa; font-size: .85rem; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <p class="kicker">Wish list &middot; Christmas 2026</p>
+      <h1>Tyler's <span>Christmas</span> list</h1>
+    </div>
+    <div class="count"><b id="days">--</b><small id="dayslabel">days to go</small></div>
+  </header>
+
+  <p class="welcome">Welcome to my Christmas wish list! If you see anything weird, it's because I had Claude make this.</p>
+
+  <details class="range" aria-labelledby="t1"><summary class="sechead"><h2 class="sec" id="t1">Under $30</h2><span>4 gifts</span></summary>
+    <ul class="grid">
+      <li class="tag"><span class="kind">Drawing supplies</span><h3>Drawing paper</h3><p>8&Prime; &times; 8&Prime;. Pads run $11 to $32 depending on brand.</p><div class="meta"><span class="price">~$15</span></div></li>
+      <li class="tag"><span class="kind">Climbing</span><h3>Magdust climbing chalk</h3><p>Single bag, 200 g.</p><div class="meta"><span class="price">$24</span><a href="https://rungne.com/products/magdust-chalk?variant=41749652930748" target="_blank" rel="noopener">View product</a></div></li>
+      <li class="tag"><span class="kind">Drawing supplies</span><h3>Picture frames</h3><p>8&Prime; &times; 8&Prime;. Typically $20 to $40 each.</p><div class="meta"><span class="price">~$27</span></div></li>
+      <li class="tag vinyl"><span class="kind">Vinyl</span><h3>Doctrine of Love</h3><p>Jalen Ngonda</p><div class="meta"><span class="price">$28</span></div></li>
+    </ul>
+  </details>
+
+  <details class="range" aria-labelledby="t2"><summary class="sechead"><h2 class="sec" id="t2">$30 to $50</h2><span>7 gifts</span></summary>
+    <ul class="grid">
+      <li class="tag vinyl"><span class="kind">Vinyl</span><h3>Space 1.8</h3><p>Nala Sinephro</p><div class="meta"><span class="price">~$30</span></div></li>
+      <li class="tag"><span class="kind">Drawing supplies</span><h3>Prismacolor colored pencils</h3><p>Premier set, 36 count.</p><div class="meta"><span class="price">~$35</span></div></li>
+      <li class="tag vinyl"><span class="kind">Vinyl</span><h3>Love Deluxe</h3><p>Sade</p><div class="meta"><span class="price">~$35</span></div></li>
+      <li class="tag vinyl"><span class="kind">Vinyl</span><h3>Promise</h3><p>Sade</p><div class="meta"><span class="price">~$35</span></div></li>
+      <li class="tag vinyl"><span class="kind">Vinyl</span><h3>Alfredo 2</h3><p>Freddie Gibbs &amp; The Alchemist. Double LP.</p><div class="meta"><span class="price">~$40</span></div></li>
+      <li class="tag vinyl"><span class="kind">Vinyl</span><h3>Son of Spergy</h3><p>Daniel Caesar. Double LP.</p><div class="meta"><span class="price">~$40</span></div></li>
+      <li class="tag"><span class="kind">Home</span><h3>Toaster</h3><p>Basic 2-slice. Nicer models start around $110.</p><div class="meta"><span class="price">~$40</span></div></li>
+    </ul>
+  </details>
+
+  <details class="range" aria-labelledby="t3"><summary class="sechead"><h2 class="sec" id="t3">$50 to $150</h2><span>3 gifts</span></summary>
+    <ul class="grid">
+      <li class="tag vinyl"><span class="kind">Vinyl</span><h3>Freudian</h3><p>Daniel Caesar. Double LP, colored pressing, usually $80 to $95.</p><div class="meta"><span class="price">~$90</span></div></li>
+      <li class="tag"><span class="kind">Tech</span><h3>Edifier MR4 speakers</h3><p>Powered studio monitors, black. $100 to $180 depending on the seller.</p><div class="meta"><span class="price">~$130</span><a href="https://www.amazon.com/Edifier-MR4-Black-Studio-Monitors/dp/B09DKV849B" target="_blank" rel="noopener">View product</a></div></li>
+      <li class="tag"><span class="kind">Tech</span><h3>Sennheiser HD 560S</h3><p>Open-back headphones. List price is $199.</p><div class="meta"><span class="price">~$150</span><a href="https://www.amazon.com/dp/B08J9MVB6W" target="_blank" rel="noopener">View product</a></div></li>
+    </ul>
+  </details>
+
+  <details class="range" aria-labelledby="t4"><summary class="sechead"><h2 class="sec" id="t4">$150 and up</h2><span>2 gifts</span></summary>
+    <ul class="grid">
+      <li class="tag"><span class="kind">Tech</span><h3>Sony STR-DH190</h3><p>Stereo receiver with phono input and Bluetooth.</p><div class="meta"><span class="price">$198</span><a href="https://electronics.sony.com/audio/audio-components/av-receivers/p/strdh190" target="_blank" rel="noopener">View product</a></div></li>
+      <li class="tag"><span class="kind">Tech</span><h3>Audio-Technica LP120</h3><p>Direct-drive turntable with USB. List price is $449.</p><div class="meta"><span class="price">~$349</span><a href="https://www.amazon.com/clp/B07N3S4X3P" target="_blank" rel="noopener">View product</a></div></li>
+    </ul>
+  </details>
+
+  <details class="range cards">
+    <summary class="sechead"><h2 class="sec" id="gc">Gift cards</h2><span>3 stores, any amount</span></summary>
+    <ul class="grid">
+      <li class="tag card"><span class="kind">Gift card</span><h3>Uniqlo</h3><p>Clothing.</p><div class="meta"><span class="price">Any amount</span></div></li>
+      <li class="tag card"><span class="kind">Gift card</span><h3>REI</h3><p>Outdoor and climbing gear.</p><div class="meta"><span class="price">Any amount</span></div></li>
+      <li class="tag card"><span class="kind">Gift card</span><h3>Hobby Lobby</h3><p>Art and craft supplies.</p><div class="meta"><span class="price">Any amount</span></div></li>
+    </ul>
+  </details>
+
+  <footer>Prices are approximate US retail for new items as of mid-November 2026. A "~" means the price varies by seller or edition.</footer>
+</main>
+<script>
+(function () {
+  var now = new Date(), y = now.getFullYear();
+  var xmas = new Date(y, 11, 25);
+  var today = new Date(y, now.getMonth(), now.getDate());
+  if (today > xmas) xmas = new Date(y + 1, 11, 25);
+  var n = Math.round((xmas - today) / 86400000);
+  document.getElementById("days").textContent = n === 0 ? "Today" : n;
+  document.getElementById("dayslabel").textContent = n === 0 ? "Merry Christmas" : (n === 1 ? "day to go" : "days to go");
+})();
+</script>
+</body>
+</html>
